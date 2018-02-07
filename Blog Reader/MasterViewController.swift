@@ -6,6 +6,9 @@
 //  Copyright © 2018 Georgy Khaydenko. All rights reserved.
 //
 
+//blogger API key
+//AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY
+
 import UIKit
 import CoreData
 
@@ -26,6 +29,40 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        let url = URL(string: "https://www.googleapis.com/blogger/v3/blogs/2399953?key=AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY")
+        
+        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            
+            if error != nil {
+                
+                print(error as Any)
+                
+            } else {
+                
+                if let urlContent = data {
+                    
+                    do {
+                        
+                        let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
+                        
+                        print(jsonResult)
+                        
+                    } catch {
+                        
+                        print("JSON processing failed")
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        task.resume()
+        
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
