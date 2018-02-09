@@ -9,6 +9,8 @@
 //blogger API key
 //AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY
 
+//google blogID = "10861780"
+
 import UIKit
 import CoreData
 
@@ -21,16 +23,23 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
+//        navigationItem.leftBarButtonItem = editButtonItem
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        navigationItem.rightBarButtonItem = addButton
+//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+//        navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
-        let url = URL(string: "https://www.googleapis.com/blogger/v3/blogs/2399953?key=AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY")
+        let url = URL(string: "https://www.googleapis.com/blogger/v3/blogs/10861780/posts?key=AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY") //test request
+        
+        //www.googleapis.com/blogger/v3/blogs/10861780/posts?key=AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY        //list of posts
+        
+        //www.googleapis.com/blogger/v3/blogs/10861780?key=AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY //blog info
+        
+        
+        //let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             
@@ -46,7 +55,44 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                         
                         let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                         
-                        print(jsonResult)
+                        if let posts = (jsonResult["items"] as? NSArray)  {
+                            
+                            for post in posts {
+                                
+                                if let title = (post as? NSDictionary)?["title"] {
+                                    
+                                    if let content = (post as? NSDictionary)?["content"] {
+                                        
+                                        let newPost = NSEntityDescription.insertNewObject(forEntityName: "Event", into: self.managedObjectContext!)
+                                        
+                                        newPost.setValue(title, forKey: "title")
+                                        newPost.setValue(content, forKey: "content")
+                                        
+                                        do {
+                                            
+                                            try self.managedObjectContext?.save()
+                                            
+                                            print("Saved \(title)")
+                                            
+                                        } catch {
+                                            print("Ther is an error")
+                                        }
+
+                                    }
+                                    
+                                }
+                                
+                            }
+
+                            //posts.count       кол-во постов - кол-во строк в таблице
+                            //контент - в соответств. вэб вью
+                            //тайтл - в лэйбл таблиц
+                            
+                            
+                            
+                        }
+                        
+//                        print(jsonResult)
                         
                     } catch {
                         
@@ -147,7 +193,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-        cell.textLabel!.text = event.timestamp!.description
+        cell.textLabel!.text = event.title
     }
 
     // MARK: - Fetched results controller
