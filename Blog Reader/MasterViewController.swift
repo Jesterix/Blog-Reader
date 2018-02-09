@@ -61,25 +61,47 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                                 
                                 if let title = (post as? NSDictionary)?["title"] {
                                     
-                                    if let content = (post as? NSDictionary)?["content"] {
-                                        
-                                        let newPost = NSEntityDescription.insertNewObject(forEntityName: "Event", into: self.managedObjectContext!)
-                                        
-                                        newPost.setValue(title, forKey: "title")
-                                        newPost.setValue(content, forKey: "content")
-                                        
-                                        do {
-                                            
-                                            try self.managedObjectContext?.save()
-                                            
-                                            print("Saved \(title)")
-                                            
-                                        } catch {
-                                            print("Ther is an error")
-                                        }
-
-                                    }
+                                    //checking the same info in storage
                                     
+                                    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
+                                    
+                                    request.predicate = NSPredicate(format: "title = %@", title as! String)
+                                    
+                                    request.returnsObjectsAsFaults = false
+                                    
+                                    do {
+                                        
+                                        let results = try self.managedObjectContext?.fetch(request)
+                                        
+                                        if (results?.count)! > 0 {
+                                            
+                                            print(results as Any)
+                                            
+                                        } else {
+                                        
+                                    
+                                    
+                                            if let content = (post as? NSDictionary)?["content"] {
+                                                
+                                                let newPost = NSEntityDescription.insertNewObject(forEntityName: "Event", into: self.managedObjectContext!)
+                                                
+                                                newPost.setValue(title, forKey: "title")
+                                                newPost.setValue(content, forKey: "content")
+                                                
+                                                do {
+                                                    
+                                                    try self.managedObjectContext?.save()
+                                                    
+                                                    print("Saved \(title)")
+                                                    
+                                                } catch {
+                                                    print("Ther is an error")
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                
                                 }
                                 
                             }
