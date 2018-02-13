@@ -38,35 +38,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ub-7E-TxA">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="zvD-E1-hyq"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="0Ub-7E-TxA" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="5di-XG-Ugz"/>
-                            <constraint firstAttribute="trailing" secondItem="0Ub-7E-TxA" secondAttribute="trailing" id="G7u-tf-tmv"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="O8h-wu-586"/>
-                            <constraint firstItem="0Ub-7E-TxA" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="8" id="Tzn-SJ-q9n"/>
-                            <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" id="Uqx-MX-ZZ3"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="Vrx-1N-xX7"/>
-                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="0Ub-7E-TxA" secondAttribute="bottom" id="w2c-Pt-vQE"/>
+                            <constraint firstItem="0Ub-7E-TxA" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="ESD-HH-Kie"/>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="0Ub-7E-TxA" secondAttribute="bottom" id="N8f-WE-CB5"/>
+                            <constraint firstAttribute="trailing" secondItem="0Ub-7E-TxA" secondAttribute="trailing" id="jAo-QN-LFN"/>
+                            <constraint firstItem="0Ub-7E-TxA" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="rTQ-u9-Ao5"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
-                        <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="deQ-Na-JPF"/>
                         <outlet property="webView" destination="0Ub-7E-TxA" id="c5O-zr-Glq"/>
                     </connections>
                 </viewController>

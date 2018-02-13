@@ -26,11 +26,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
-        
         let url = URL(string: "https://www.googleapis.com/blogger/v3/blogs/10861780/posts?key=AIzaSyBm_boEtxCdqpzAZmNOtZRFxfetayPTqRY") //list of posts
         
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
@@ -52,6 +47,45 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                             for post in posts {
                                 
                                 if let title = (post as? NSDictionary)?["title"] {
+                                    
+                                    /*
+                                     //we can delete all content or check the same in storage
+                                     //this is how to delete
+                                     
+                                    let context = self.fetchedResultsController.managedObjectContext
+                                    
+                                    let request = NSFetchRequest<Event>(entityName: "Event")
+                                     
+                                    do {
+                                        
+                                        let results = try context.fetch(request)
+                                        
+                                        if results.count > 0 {
+                                            
+                                            for result in results {
+                                                
+                                                context.delete(result)
+                                                
+                                                do {
+                                                    
+                                                    try context.save()
+                                                    
+                                                } catch {
+                                                    
+                                                    print("Specific delete failed")
+                                                    
+                                                }
+                                                
+                                            }
+                                            
+                                        }
+                                        
+                                    } catch {
+                                        
+                                        print("Delete failed")
+                                        
+                                    }
+                                     */
                                     
                                     //checking the same info in storage
                                     
@@ -134,11 +168,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         task.resume()
         
         
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
